@@ -126,7 +126,7 @@ def main():
     rclpy.init(args=None)
 
     # Directory where bag files are stored
-    BAG_DIR = 'data-930'  # Adjust this if you have a different directory
+    BAG_DIR = 'square_path_normal_speed'  # Adjust this if you have a different directory
 
     # New directory inside BAG_DIR to store CSV files
     CSV_DIR = os.path.join(BAG_DIR, 'extracted_data')

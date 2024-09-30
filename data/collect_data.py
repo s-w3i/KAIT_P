@@ -6,7 +6,7 @@ import os
 import signal
 
 # Number of iterations
-NUM_ITERATIONS = 50
+NUM_ITERATIONS = 5
 
 # Base name for bag files
 BAG_BASE_NAME = "cmd_vel_bag"
