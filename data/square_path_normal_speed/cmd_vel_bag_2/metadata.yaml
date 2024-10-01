@@ -2,10 +2,10 @@ rosbag2_bagfile_information:
   version: 9
   storage_identifier: mcap
   duration:
-    nanoseconds: 73839728518
+    nanoseconds: 73481133288
   starting_time:
-    nanoseconds_since_epoch: 1727684903705345748
-  message_count: 3340
+    nanoseconds_since_epoch: 1727704915189354238
+  message_count: 3488
   topics_with_message_count:
     - topic_metadata:
         name: /cmd_vel
@@ -43,7 +43,7 @@ rosbag2_bagfile_information:
               nsec: 854775807
             avoid_ros_namespace_conventions: false
         type_description_hash: RIHS01_9c45bf16fe0983d80e3cfe750d6835843d265a9a6c46bd2e609fcddde6fb8d2a
-      message_count: 1483
+      message_count: 1486
     - topic_metadata:
         name: /imu
         type: sensor_msgs/msg/Imu
@@ -65,7 +65,7 @@ rosbag2_bagfile_information:
               nsec: 854775807
             avoid_ros_namespace_conventions: false
         type_description_hash: RIHS01_7d9a00ff131080897a5ec7e26e315954b8eae3353c3f995c55faf71574000b5b
-      message_count: 933
+      message_count: 1006
     - topic_metadata:
         name: /odom
         type: nav_msgs/msg/Odometry
@@ -87,7 +87,7 @@ rosbag2_bagfile_information:
               nsec: 854775807
             avoid_ros_namespace_conventions: false
         type_description_hash: RIHS01_3cc97dc7fb7502f8714462c526d369e35b603cfc34d946e3f2eda2766dfec6e0
-      message_count: 616
+      message_count: 664
     - topic_metadata:
         name: /scan
         type: sensor_msgs/msg/LaserScan
@@ -109,7 +109,7 @@ rosbag2_bagfile_information:
               nsec: 854775807
             avoid_ros_namespace_conventions: false
         type_description_hash: RIHS01_64c191398013af96509d518dac71d5164f9382553fce5c1f8cca5be7924bd828
-      message_count: 308
+      message_count: 332
   compression_format: ""
   compression_mode: ""
   relative_file_paths:
@@ -117,9 +117,9 @@ rosbag2_bagfile_information:
   files:
     - path: cmd_vel_bag_2_0.mcap
       starting_time:
-        nanoseconds_since_epoch: 1727684903705345748
+        nanoseconds_since_epoch: 1727704915189354238
       duration:
-        nanoseconds: 73839728518
-      message_count: 3340
+        nanoseconds: 73481133288
+      message_count: 3488
   custom_data: ~
   ros_distro: jazzy

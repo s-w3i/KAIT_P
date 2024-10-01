@@ -80,7 +80,7 @@ class WaypointFollower(Node):
 
     def feedback_callback(self, feedback_msg):
         feedback = feedback_msg.feedback
-        self.get_logger().info(f'Currently at waypoint {feedback.current_waypoint + 1}')
+        #self.get_logger().info(f'Currently at waypoint {feedback.current_waypoint + 1}')
 
     def goal_response_callback(self, future):
         goal_handle = future.result()

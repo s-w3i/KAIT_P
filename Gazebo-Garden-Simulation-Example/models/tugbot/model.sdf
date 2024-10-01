@@ -88,7 +88,7 @@
     <link name="imu_link">
       <pose>0.14 0.02 0.25 0 0 -1.57</pose>
       <sensor name="imu" type="imu">
-        <update_rate>30</update_rate>
+        <update_rate>10</update_rate>
         <visualize>false</visualize>
       </sensor>
     </link>
@@ -149,7 +149,7 @@
       <pose relative_to="base_link">0.0553 0 0.4323 0 0 0</pose>
       <sensor name="color" type="camera">
         <pose>0 0.0325 0.0125 0 0 0</pose>
-        <update_rate>6</update_rate>
+        <update_rate>10</update_rate>
         <always_on>0</always_on>
         <camera>
           <horizontal_fov>1.20427718</horizontal_fov>
@@ -174,7 +174,7 @@
       </sensor>
       <sensor name="depth" type="depth_camera">
         <pose>0 0.0175 0.0125 0 0 0</pose>
-        <update_rate>6</update_rate>
+        <update_rate>10</update_rate>
         <always_on>0</always_on>
         <camera>
           <horizontal_fov>1.51843645</horizontal_fov>
@@ -209,7 +209,7 @@
       <pose relative_to="base_link">-0.241 0 0.2303 0 0 3.141592654</pose>
       <sensor name="color" type="camera">
         <pose>0 0.0325 0.0125 0 0 0</pose>
-        <update_rate>6</update_rate>
+        <update_rate>10</update_rate>
         <always_on>0</always_on>
         <camera>
           <horizontal_fov>1.20427718</horizontal_fov>
@@ -234,7 +234,7 @@
       </sensor>
       <sensor name="depth" type="depth_camera">
         <pose>0 0.0175 0.0125 0 0 0</pose>
-        <update_rate>6</update_rate>
+        <update_rate>10</update_rate>
         <always_on>0</always_on>
         <camera>
           <horizontal_fov>1.51843645</horizontal_fov>
@@ -295,7 +295,7 @@
     <link name="scan_back">
       <pose>-0.2075 0 0.205 0 0 3.141592654</pose>
       <sensor name="scan_back" type="gpu_lidar">
-        <update_rate>5</update_rate>
+        <update_rate>10</update_rate>
         <lidar>
           <scan>
             <horizontal>
@@ -930,7 +930,7 @@
       <right_joint>wheel_right_joint</right_joint>
       <wheel_separation>0.5605</wheel_separation>
       <wheel_radius>0.195</wheel_radius>
-      <odom_publish_frequency>20</odom_publish_frequency>
+      <odom_publish_frequency>10</odom_publish_frequency>
       <frame_id>odom</frame_id>
       <child_frame_id>base_link</child_frame_id>
     </plugin>
@@ -958,7 +958,7 @@
       <publish_visual_pose>false</publish_visual_pose>
       <publish_sensor_pose>false</publish_sensor_pose>
       <publish_nested_model_pose>true</publish_nested_model_pose>
-      <update_frequency>20</update_frequency>
+      <update_frequency>10</update_frequency>
     </plugin>
 
     <plugin filename="ignition-gazebo-joint-controller-system" name="ignition::gazebo::systems::JointController">

@@ -4,9 +4,10 @@ import subprocess
 import time
 import os
 import signal
+import re
 
-# Number of iterations
-NUM_ITERATIONS = 5
+# Total number of iterations you want to perform
+NUM_ITERATIONS = 1000
 
 # Base name for bag files
 BAG_BASE_NAME = "cmd_vel_bag"
@@ -18,7 +19,32 @@ BAG_DIR = 'square_path_normal_speed'
 if not os.path.exists(BAG_DIR):
     os.makedirs(BAG_DIR)
 
-for i in range(1, NUM_ITERATIONS + 1):
+# Find the highest existing iteration number
+existing_iterations = []
+
+# List all entries in BAG_DIR
+for entry in os.listdir(BAG_DIR):
+    # Check if the entry matches the bag name pattern
+    match = re.match(f"{re.escape(BAG_BASE_NAME)}_(\d+)", entry)
+    if match:
+        iteration_num = int(match.group(1))
+        existing_iterations.append(iteration_num)
+
+if existing_iterations:
+    max_existing_iteration = max(existing_iterations)
+    start_iteration = max_existing_iteration + 1
+    print(f"Found existing data up to iteration {max_existing_iteration}. Continuing from iteration {start_iteration}.")
+else:
+    start_iteration = 1
+    print("No existing data found. Starting from iteration 1.")
+
+# Adjust NUM_ITERATIONS if needed
+if start_iteration > NUM_ITERATIONS:
+    print(f"All {NUM_ITERATIONS} iterations have already been completed.")
+    exit(0)
+
+# Now start from start_iteration to NUM_ITERATIONS
+for i in range(start_iteration, NUM_ITERATIONS + 1):
     print(f"Starting iteration {i} of {NUM_ITERATIONS}")
 
     try:
@@ -29,7 +55,7 @@ for i in range(1, NUM_ITERATIONS + 1):
         sim_process = subprocess.Popen(sim_cmd, preexec_fn=os.setsid)
 
         # Wait for the simulation to fully start
-        time.sleep(8)  # Adjust the sleep duration as needed
+        time.sleep(10)  # Adjust the sleep duration as needed
 
         # Start the second launch file: nav.launch.py
         nav_cmd = [
@@ -38,7 +64,7 @@ for i in range(1, NUM_ITERATIONS + 1):
         nav_process = subprocess.Popen(nav_cmd, preexec_fn=os.setsid)
 
         # Wait for the navigation stack to fully start
-        time.sleep(8)  # Adjust the sleep duration as needed
+        time.sleep(10)  # Adjust the sleep duration as needed
 
         # Start the waypoint follower and rosbag recording
         # Each time, save the bag file with a unique name in the specified directory
@@ -61,12 +87,14 @@ for i in range(1, NUM_ITERATIONS + 1):
     finally:
         # After waypoint follower finishes, stop the nav and sim processes
         # Kill the entire process group for nav_process
-        os.killpg(os.getpgid(nav_process.pid), signal.SIGINT)
-        nav_process.wait()
+        if 'nav_process' in locals():
+            os.killpg(os.getpgid(nav_process.pid), signal.SIGINT)
+            nav_process.wait()
 
         # Kill the entire process group for sim_process
-        os.killpg(os.getpgid(sim_process.pid), signal.SIGINT)
-        sim_process.wait()
+        if 'sim_process' in locals():
+            os.killpg(os.getpgid(sim_process.pid), signal.SIGINT)
+            sim_process.wait()
 
     # Wait a few seconds before the next iteration
     time.sleep(15)  # Adjust as needed
