@@ -9,12 +9,11 @@ Extracted Topics:
 - /odom
 
 CSV Output:
-Each topic will have its own CSV file stored in the 'extracted_data' directory within 'bag_files'.
+All CSV files are stored in the 'extracted_data' directory within 'bag_files'.
 """
 
 import csv
 import os
-import sys
 import rclpy
 from rclpy.serialization import deserialize_message
 from rosidl_runtime_py.utilities import get_message
@@ -25,7 +24,7 @@ def extract_messages_from_bag(bag_file: str, csv_dir: str):
     Extracts messages from specified topics in a .db3 bag file and writes them to CSV files.
 
     Parameters:
-    - bag_file: Path to the .db3 bag folder.
+    - bag_file: Path to the .db3 bag file.
     - csv_dir: Directory where the CSV files will be saved.
     """
 
@@ -52,10 +51,11 @@ def extract_messages_from_bag(bag_file: str, csv_dir: str):
     desired_topics = ['/cmd_vel', '/imu', '/scan', '/odom']
 
     # Verify that desired topics exist in the bag
-    for topic in desired_topics:
-        if topic not in topic_type_map:
-            print(f"Warning: Topic {topic} not found in bag {bag_file}. Skipping.")
-    
+    available_topics = set(topic_type_map.keys())
+    missing_topics = set(desired_topics) - available_topics
+    for topic in missing_topics:
+        print(f"Warning: Topic {topic} not found in bag {bag_file}. Skipping.")
+
     # Get message classes for desired topics
     msg_classes = {}
     for topic in desired_topics:
@@ -119,6 +119,9 @@ def extract_messages_from_bag(bag_file: str, csv_dir: str):
             csv_writers[topic] = writer
             csv_files[topic] = csv_file
 
+    # Initialize a separate flag for scan header
+    scan_header_written = False
+
     # Iterate through the bag and write to CSV
     try:
         while reader.has_next():
@@ -149,10 +152,10 @@ def extract_messages_from_bag(bag_file: str, csv_dir: str):
                 elif topic == '/scan':
                     # Only record ranges
                     ranges = msg.ranges  # List of float
-                    if not csv_writers[topic].header_written:
+                    if not scan_header_written:
                         header = ['timestamp'] + [f'range_{i}' for i in range(len(ranges))]
                         csv_writers[topic].writerow(header)
-                        csv_writers[topic].header_written = True
+                        scan_header_written = True
                     row = [timestamp / 1e9] + ranges
                     csv_writers[topic].writerow(row)
 
